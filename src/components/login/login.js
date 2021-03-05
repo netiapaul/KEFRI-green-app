@@ -1,9 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import Logo from '../../assets/images/Logo.png'
-import './login.css'
-import { BrowserRouter as Router, Link } from 'react-router-dom'
+import './login.css';
+import { Link } from 'react-router-dom';
+
+// initial Value for the form
+
+const initialValues = Object.freeze({
+    email: "",
+    password: "",
+  });
 
 const Login = () => {
+
+    const [values, setValues] = useState(initialValues);
+
+    const handleInputChange = (e) => {
+
+        const { name, value } = e.target;
+    
+        setValues({
+          ...values,
+          [name]: value,
+        });
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(values);
+
+    }
+
     return(
         <React.Fragment>
             {/* Image and text  */}
@@ -22,16 +48,28 @@ const Login = () => {
 
                 <div className="card-body">
 
-                <form>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                <div>
+                    <h1 className="text-center m-4">LOGIN</h1>
+                </div>
+
+                <form onSubmit={handleSubmit}>
+
+                    <div className="mb-3 ">
+                        
+                        <label htmlFor="email" className="form-label">Email address</label>
+                        <input type="email" className="form-control" name="email" id="email" value={values.email} onChange={handleInputChange} required/>
+
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="exampleInputPassword1"/>
+
+                    <div className="mb-3 ">
+
+                        <label htmlFor="password" className="form-label">Password</label>
+                        <input type="password" className="form-control" name="password" id="password" value={values.password} onChange={handleInputChange} required/>
+
                     </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+
+                    <button type="submit" className="btn btn-primary">Login</button>
+
                 </form>
                 
                 </div>

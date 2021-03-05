@@ -1,4 +1,10 @@
 .card {
-  width: 40rem;
+  width: 20rem;
+}
+
+@media screen and (min-width: 768px) {
+  .card {
+    width: 40rem;
+  }
 }
 /*# sourceMappingURL=home.css.map */

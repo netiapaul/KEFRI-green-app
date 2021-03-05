@@ -1,4 +1,5 @@
 import React,{useState} from 'react';
+import Header from '../header/header';
 import './home.css';
 
 const initialValues = Object.freeze({
@@ -33,16 +34,9 @@ const Home = () => {
     return(
         <>
             {/* Image and text  */}
- 
-            <nav className="navbar navbar-light">
-                <div className="container-fluid">
-                    <p className="navbar-brand p-2" href="#">
-                        <img src="https://www.kefri.org/images/trial-2.png" alt="logo" width="50" className="img-fluid"/>
-                        <span className="navbar-brand h1 text-light">Green App</span> 
-                    </p>
-                </div>
-            </nav>
-
+    
+            <Header />
+            
             {/* Form Card */}
             <div className="card mt-5 mx-auto">
 

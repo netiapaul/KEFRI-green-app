@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './login.css';
 import Header from '../header/header'
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 
 // initial Value for the form
 
@@ -12,6 +12,8 @@ const initialValues = Object.freeze({
 
 const Login = () => {
 
+    let history = useHistory();
+ 
     const [values, setValues] = useState(initialValues);
 
     const handleInputChange = (e) => {
@@ -24,11 +26,41 @@ const Login = () => {
         });
       };
 
+    //   const fetchData = () => {
+    //       fetch('http://localhost:5000/api/v1/users/login',{
+    //         method: 'POST',
+    //         headers: {
+    //           'Accept': 'application/json',
+    //           'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(values)
+    //       })
+    //       .then(res => res.json())
+    //       .then(data => console.log(data))
+    //   }
+
       const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(values);
-
+        fetch('https://sitematching.herokuapp.com/api/v1/users/login',{
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+          })
+          .then(response => {
+            if(!response.ok){
+                throw new Error(response.status);
+            }else{
+                history.push('/home');
+                return response.json();
+            } 
+            })
+          .then(data => localStorage.setItem('user',JSON.stringify(data.userId)))
+          .catch(err => console.log(err))
     }
+
 
     return(
         <React.Fragment>

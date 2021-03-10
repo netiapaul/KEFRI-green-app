@@ -1,4 +1,5 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
+import { useHistory } from 'react-router';
 import Header from '../header/header';
 import './home.css';
 
@@ -6,12 +7,21 @@ const initialValues = Object.freeze({
     name: "",
     longitude: "",
     latitude: "",
-    species: "",
+    species:[]
   });
-
+  
   
 const Home = () => { 
+    let history = useHistory();
 
+    const [data,setData] = useState("")
+    
+   
+    useEffect(()=>{
+      let user = JSON.parse(localStorage.getItem('user'));
+      setData(user)
+        
+    },[data]);
 
     const [values, setValues] = useState(initialValues);
 
@@ -28,7 +38,14 @@ const Home = () => {
       const handleSubmit = (e) => {
         e.preventDefault();
         console.log(values);
+        console.log(data);
 
+
+    }
+
+    const logOut = () =>{
+        localStorage.clear();
+        history.push('/')
     }
 
     return(
@@ -75,7 +92,12 @@ const Home = () => {
 
                     </div>
 
-                    <button type="submit" className="btn btn-primary">Submit Data</button>
+                    <div className="d-flex justify-content-between">
+                    <button type="submit" className={data ? "btn btn-primary":"btn btn-primary disabled"}>Submit Data</button>
+                    <button type="submit" className="btn btn-outline-danger" onClick={logOut}>Logout</button>
+                    </div>
+
+                    
                     
                 </form>
                 

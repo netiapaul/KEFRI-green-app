@@ -57,7 +57,7 @@ const Login = () => {
                 return response.json();
             } 
             })
-          .then(data => localStorage.setItem('user',JSON.stringify(data.userId)))
+          .then(data => localStorage.setItem('user',JSON.stringify(data.token)))
           .catch(err => console.log(err))
     }
 

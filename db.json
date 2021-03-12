@@ -1,9 +1,13 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "name": "mwihoko",
+      "longitude": 234234,
+      "latitude": 234234,
+      "species": [
+        "23423424"
+      ],
+      "id": 1
     }
   ],
   "comments": [

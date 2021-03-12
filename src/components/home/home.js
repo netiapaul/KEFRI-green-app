@@ -113,7 +113,26 @@ const Home = () => {
         <Formik initialValues={{ name:"",longitude:"",latitude:"",species: [] }}
 
                 onSubmit={values =>
-                    console.log(JSON.stringify(values, null, 2))
+                    // fetch('https://jsonplaceholder.typicode.com/posts')
+                    // fetch('https://sitematching.herokuapp.com/api/v1/speciesToSite/', {
+                    //     method: 'POST',
+                    //     body: JSON.stringify(values),
+                    //     headers: {
+                    //     "Content-type": "application/json; charset=UTF-8"
+                    //     }
+                    // })
+                    
+                    fetch('http://localhost:3004/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                      },
+                    body: JSON.stringify(values)
+                })
+                .then(response => response.json())
+                .then(json => console.log(json))
+                    // console.log(JSON.stringify(values, null, 2))
                 }
 
                 render={({ values }) => (
@@ -131,7 +150,7 @@ const Home = () => {
 
                     <div className="mb-3">
                         <label htmlFor="latitude" className="form-label">Latitude</label>
-                        <Field className="form-control" id="name" type="number" id="latitude" name="latitude" placeholder="e.g 36.6588983433" required />
+                        <Field className="form-control" id="name" type="number" id="latitude" name="latitude" placeholder="e.g -1.20266883724" required />
                     </div>
                     
                     <FieldArray

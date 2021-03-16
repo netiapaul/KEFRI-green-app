@@ -15,6 +15,8 @@ const Home = () => {
     setToken(user);
   }, [token]);
 
+  
+
   const logOut = () => {
     localStorage.clear();
     history.push("/");
@@ -63,8 +65,10 @@ const Home = () => {
                   .then((response) => {
                   if (!response.ok) {
                     if(response.status == 404){
+                      
                       error = setError(`you have submited wrong data: ${response.status}`)
                     }else if(response.status > 499){
+                       
                       error = setError(`Internal Server Error: ${response.status}`)
                     }
                   } else {
@@ -81,8 +85,10 @@ const Home = () => {
             render={({ values }) => (
               <>
 
-              {error?<div class="alert alert-danger" role="alert">
+              {error?
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {error}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>:""}
               
               

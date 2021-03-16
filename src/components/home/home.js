@@ -122,7 +122,7 @@ const Home = () => {
                     //     }
                     // })
                     
-                    fetch('http://localhost:3004/posts', {
+                    fetch('https://sitematching.herokuapp.com/api/v1/speciesToSite/', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

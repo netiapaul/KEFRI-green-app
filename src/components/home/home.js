@@ -8,6 +8,7 @@ const Home = () => {
   let history = useHistory();
 
   const [token, setToken] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("token"));
@@ -34,6 +35,7 @@ const Home = () => {
               latitude: "",
               species: [{ name: "" }],
             }}
+            // onReset={handleReset}
             onSubmit={
               (values) =>
                 // fetch('https://jsonplaceholder.typicode.com/posts')
@@ -44,9 +46,10 @@ const Home = () => {
                 //     "Content-type": "application/json; charset=UTF-8"
                 //     }
                 // })
-
+                
                 fetch(
-                  "https://sitematching.herokuapp.com/api/v1/speciesToSite/",
+                    "https://sitematching.herokuapp.com/api/v1/speciesToSite/",
+                  // "https://jsonplaceholder.typicode.com/posts2",
                   {
                     method: "POST",
                     headers: new Headers({
@@ -57,13 +60,35 @@ const Home = () => {
                     body: JSON.stringify(values),
                   }
                 )
-                  .then((response) => response.json())
+                  .then((response) => {
+                  if (!response.ok) {
+                    if(response.status == 404){
+                      error = setError(`you have submited wrong data: ${response.status}`)
+                    }else if(response.status > 499){
+                      error = setError(`Internal Server Error: ${response.status}`)
+                    }
+                  } else {
+                    setTimeout(() => {
+                    alert(JSON.stringify(values, null, 2));
+                  }, 500)
+                    return response.json();
+                  }
+                })
                   .then((json) => console.log(json))
                   .catch((err) => console.log(err))
               // console.log(JSON.stringify(values, null, 2))
             }
             render={({ values }) => (
+              <>
+
+              {error?<div class="alert alert-danger" role="alert">
+                {error}
+              </div>:""}
+              
+              
+             
               <Form>
+
                 <div className="mb-3">
                   <label htmlFor="name">Name</label>
                   <Field
@@ -157,6 +182,7 @@ const Home = () => {
                           >
                             Submit Data
                           </button>
+                          <button type="reset"  className="btn btn-outline-secondary">Reset</button>
                           <button
                             type="button"
                             className="btn btn-outline-danger"
@@ -171,6 +197,7 @@ const Home = () => {
                   )}
                 />
               </Form>
+               </>
             )}
           />
         </div>
